@@ -1,0 +1,62 @@
+{
+  "name": "moniteur-app",
+  "version": "1.0.0",
+  "author": {
+    "name": "AUEB CSLab",
+    "email": "cslab@aueb.gr"
+  },
+  "scripts": {
+    "build:linux": "electron-builder --linux",
+    "build:win": "electron-builder --windows",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "publish:linux": "electron-builder --publish onTag --linux",
+    "publish:win": "electron-builder --publish onTag --windows"
+  },
+  "main": "electron/main.js",
+  "dependencies": {
+    "electron-updater": "^4.3.1",
+    "js-yaml": "^3.13.1"
+  },
+  "devDependencies": {
+    "electron": "^9.0.5",
+    "electron-builder": "^22.7.0"
+  },
+  "build": {
+    "appId": "org.aueb.moniteur",
+    "nsis": {
+      "oneClick": false,
+      "artifactName": "${productName}-Setup-v${version}.${ext}"
+    },
+    "linux": {
+      "target": {
+        "target": "AppImage",
+        "arch": [
+          "armv7l",
+          "x64"
+        ]
+      },
+      "artifactName": "${productName}-${arch}-v${version}.${ext}"
+    },
+    "dmg": {
+      "artifactName": "${productName}-Setup-v${version}.${ext}"
+    },
+    "extraFiles": [
+      {
+        "from": "config/config.example.yml",
+        "to": "config.yml"
+      }
+    ],
+    "publish": [
+      {
+        "provider": "github",
+        "releaseType": "release"
+      }
+    ]
+  },
+  "homepage": "https://cslab.aueb.gr",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aueb-cslabs/moniteur-electron.git"
+  }
+}
